@@ -22,14 +22,13 @@ pub enum DamageType
 //represents the amount of damage of a certain type that could potentially be dealt
 pub struct DamageCategory
 {
-    category_type: DamageType,
-    die: i32,
-    num_dice: i32,
-    bonus: i32
+    pub category_type: DamageType,
+    pub die: i32,
+    pub num_dice: i32,
+    pub bonus: i32
 }
 impl DamageCategory
 {
-
     //Calculates the damage done in that category and returns it as an instance of Damage
     fn roll_for_category(&self) -> Damage
     {
@@ -42,6 +41,7 @@ impl DamageCategory
     }
 }
 
+#[derive(Debug)]
 pub struct Damage
 {
     pub damage_type_for_damage: DamageType,
@@ -54,12 +54,18 @@ pub struct Attack
     pub damage_categories: Vec<DamageCategory>
 }
 
+
 impl Attack
 {
-    //fn roll_damage(&self) -> Damage
-    //{
-        
-    //}
+    pub fn roll_damage(&self) -> Vec<Damage>
+    {
+        let mut damage_categories: Vec<Damage> = vec![];
+        for i in &self.damage_categories
+        {
+            damage_categories.push(i.roll_for_category());
+        }
+        return damage_categories;
+    }
     
     fn roll_to_hit(&self, ac: &i32) -> bool
     {
