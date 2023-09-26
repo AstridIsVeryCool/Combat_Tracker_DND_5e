@@ -1,8 +1,3 @@
-
-
-
-
-
 pub mod Combat_Types
 {
     use rand::Rng;
