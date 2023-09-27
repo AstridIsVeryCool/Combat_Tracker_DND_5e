@@ -20,9 +20,11 @@ fn main()
         num_dice: 2
     };
 
+    let a = "big nae nae whip and dab moment".to_string();
 
     let a: combat_types::Attack = combat_types::Attack
     {
+        name: a,
         to_hit_bonus: 3, 
         damage_categories: vec![z, g]
     };
@@ -33,6 +35,15 @@ fn main()
     {
         println!("{:?}", b[i].damage_type_for_damage);
         println!("{}", b[i].amount);
+    }
+
+    if a.roll_to_hit(&18)
+    {
+        println!("Hit");
+    }
+    else 
+    {
+        println!("miss");    
     }
 
 }

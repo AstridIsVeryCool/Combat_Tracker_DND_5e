@@ -67,9 +67,42 @@ impl Attack
         return damage_categories;
     }
     
-    fn roll_to_hit(&self, ac: &i32) -> bool
+    pub fn roll_to_hit(&self, ac: &i32) -> bool
     {
         let roll = rand::thread_rng().gen_range(1..=20);
         return (roll + self.to_hit_bonus) >= *ac;
+    }
+}
+
+//represents a combatant
+pub struct Entity
+{
+    pub hitpoints: i32,
+    pub maximum_hitpoints: i32,
+    pub temporary_hitpoints: i32,
+    pub armour_class: i32,
+    pub attacks: Vec<Attack>,
+    pub resistances: Vec<DamageType>
+}
+
+impl Entity
+{
+    //takes damage done and damage type and returns the current hitpoints of the combatant
+    fn take_damage(&mut self, damage_done: Damage) -> i32
+    {
+        let mut is_resistant: bool = false;
+        for x in &self.resistances
+        {
+            is_resistant = is_resistant | (x == &damage_done.damage_type_for_damage);
+        }
+
+        if(is_resistant)
+        {
+            self.hitpoints -= damage_done.amount/2;
+            return self.hitpoints;
+        }
+
+        self.hitpoints -= damage_done.amount;
+        return self.hitpoints;
     }
 }
