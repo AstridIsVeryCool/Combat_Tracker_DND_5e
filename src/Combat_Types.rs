@@ -78,6 +78,7 @@ impl Attack
 //represents a combatant
 pub struct Entity
 {
+    pub is_player: bool,
     pub hitpoints: i32,
     pub maximum_hitpoints: i32,
     pub temporary_hitpoints: i32,
@@ -105,5 +106,24 @@ impl Entity
 
         self.hitpoints -= damage_done.amount;
         return self.hitpoints;
+    }
+
+    //ADD ERROR HANDLING
+    fn attack_entity(&self, target: Entity, attack_name: String) ->Vec<Damage>
+    {
+        let attack = x;
+        for x in &self.attacks
+        {
+            if(x.name == attack_name)
+            {
+                
+                break;
+            }
+        }
+
+        if(attack)
+        {
+            
+        }
     }
 }
