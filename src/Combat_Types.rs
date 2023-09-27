@@ -1,4 +1,6 @@
 
+use std::vec;
+
 use rand::Rng;
 //Enumeration representing the damage type of damage
 #[derive(Copy, Clone, Debug, PartialEq)]
@@ -109,21 +111,24 @@ impl Entity
     }
 
     //ADD ERROR HANDLING
-    fn attack_entity(&self, target: Entity, attack_name: String) ->Vec<Damage>
+    fn attack_entity(&self, attack_name: String) ->Vec<Damage>
     {
-        let attack = x;
+        let mut attack = &self.attacks[0];
         for x in &self.attacks
         {
-            if(x.name == attack_name)
+            if x.name == attack_name
             {
-                
+                attack = x;
                 break;
             }
         }
+        let mut damages: Vec<Damage> = vec![];
 
-        if(attack)
+        for x in &attack.damage_categories
         {
-            
+            damages.push(x.roll_for_category());
         }
+        
+        return damages;
     }
 }
