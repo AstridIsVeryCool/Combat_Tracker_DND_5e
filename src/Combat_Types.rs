@@ -1,7 +1,7 @@
 
 use rand::Rng;
 //Enumeration representing the damage type of damage
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub enum DamageType
 {
     Acid,
@@ -50,6 +50,7 @@ pub struct Damage
 
 pub struct Attack
 {
+    pub name: String,
     pub to_hit_bonus: i32,
     pub damage_categories: Vec<DamageCategory>
 }
