@@ -1,9 +1,11 @@
-use std::io;
-use combat_types::{Damage, DamageCategory};
+use std::{io, string};
+use combat_types::{Damage, DamageCategory, Entity};
 mod combat_types;
 
 fn main() 
 {
+    
+
     let z: DamageCategory = DamageCategory
     {
         category_type: combat_types::DamageType::Piercing,
@@ -20,30 +22,35 @@ fn main()
         num_dice: 2
     };
 
-    let a = "big nae nae whip and dab moment".to_string();
+    let w: String = "big nae nae whip and dab moment".to_string();
 
     let a: combat_types::Attack = combat_types::Attack
     {
-        name: a,
+        name: w,
         to_hit_bonus: 3, 
         damage_categories: vec![z, g]
     };
 
-    let b: Vec<Damage> = a.roll_damage();
+    let mut test_entity: Entity = Entity 
+    { 
+        is_player: true,
+        hitpoints: 12,
+        maximum_hitpoints: 12,
+        temporary_hitpoints: 0,
+        armour_class: 13,
+        attacks: (vec![a]),
+        resistances: (vec![]) 
+    };
 
-    for i in 0..b.len()
-    {
-        println!("{:?}", b[i].damage_type_for_damage);
-        println!("{}", b[i].amount);
-    }
+    let q: String = "big nae nae whip and dab moment".to_string();
 
-    if a.roll_to_hit(&18)
-    {
-        println!("Hit");
-    }
-    else 
-    {
-        println!("miss");    
-    }
+    let mut sex_mode: Vec<Damage> = test_entity.roll_damage(&q);
 
+    println!("{:?}", sex_mode[1].damage_type_for_damage);
+
+    println!("{}", sex_mode[1].amount);   
+
+    println!("{:?}", sex_mode[0].damage_type_for_damage);
+
+    println!("{}", sex_mode[0].amount);  
 }
