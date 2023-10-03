@@ -4,53 +4,29 @@ mod combat_types;
 
 fn main() 
 {
-    
-
-    let z: DamageCategory = DamageCategory
+    //let mut buffer = String::new();
+    //io::stdin().read_line(&mut buffer);
+    let mut console_input: String = String::new();
+    let mut continue_running: bool = true;
+    while continue_running
     {
-        category_type: combat_types::DamageType::Piercing,
-        die: 8,
-        bonus: 2,
-        num_dice: 1
-    };
+        io::stdin().read_line(&mut console_input);
 
-    let g: DamageCategory = DamageCategory
-    {
-        category_type: combat_types::DamageType::Fire,
-        die: 6,
-        bonus: 0,
-        num_dice: 2
-    };
+        if console_input == "create entity"
+        {
 
-    let w: String = "big nae nae whip and dab moment".to_string();
+        }
 
-    let a: combat_types::Attack = combat_types::Attack
-    {
-        name: w,
-        to_hit_bonus: 3, 
-        damage_categories: vec![z, g]
-    };
+    }
 
-    let mut test_entity: Entity = Entity 
-    { 
-        is_player: true,
-        hitpoints: 12,
-        maximum_hitpoints: 12,
-        temporary_hitpoints: 0,
-        armour_class: 13,
-        attacks: (vec![a]),
-        resistances: (vec![]) 
-    };
+}
 
-    let q: String = "big nae nae whip and dab moment".to_string();
+fn create_entity() -> Entity
+{
+    let mut user_input = String::new();
+    println!("Is the entity a player?: y/n");
+    io::stdin().read_line(&mut user_input);
+    let is_player: bool = user_input == "y";
 
-    let mut sex_mode: Vec<Damage> = test_entity.roll_damage(&q);
 
-    println!("{:?}", sex_mode[1].damage_type_for_damage);
-
-    println!("{}", sex_mode[1].amount);   
-
-    println!("{:?}", sex_mode[0].damage_type_for_damage);
-
-    println!("{}", sex_mode[0].amount);  
 }

@@ -1,5 +1,6 @@
 use std::vec;
 use rand::Rng;
+#[allow(unused)]
 //Enumeration representing the damage type of damage
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum DamageType
@@ -67,7 +68,7 @@ impl Attack
         }
         return damage_categories;
     }
-    
+
     pub fn roll_to_hit(&self, ac: &i32) -> bool
     {
         let roll = rand::thread_rng().gen_range(1..=20);
@@ -90,7 +91,7 @@ pub struct Entity
 impl Entity
 {
     //takes damage done and damage type and returns the current hitpoints of the combatant
-    pub fn take_damage(&mut self, damage_done: Damage) -> i32
+    fn take_single_damage(&mut self, damage_done: Damage) -> i32
     {
         let mut is_resistant: bool = false;
         for x in &self.resistances
@@ -107,7 +108,13 @@ impl Entity
         self.hitpoints -= damage_done.amount;
         return self.hitpoints;
     }
-    
+    pub fn take_damage(&mut self, damages: Vec<Damage>)
+    {
+        for x in damages
+        {
+            &self.take_single_damage(x);
+        }
+    }
     //ADD ERROR HANDLING
     pub fn roll_damage(&self, attack_name: &String) ->Vec<Damage>
     {
