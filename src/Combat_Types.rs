@@ -91,7 +91,8 @@ pub struct Entity
 impl Entity
 {
     //takes damage done and damage type and returns the current hitpoints of the combatant
-    fn take_single_damage(&mut self, damage_done: Damage) -> i32
+    //ADD TEMPORARY HIT POINTS
+    fn take_single_damage(&mut self, damage_done: Damage)
     {
         let mut is_resistant: bool = false;
         for x in &self.resistances
@@ -102,11 +103,12 @@ impl Entity
         if is_resistant
         {
             self.hitpoints -= damage_done.amount/2;
-            return self.hitpoints;
+        }
+        else
+        {
+            self.hitpoints -= damage_done.amount;
         }
 
-        self.hitpoints -= damage_done.amount;
-        return self.hitpoints;
     }
     pub fn take_damage(&mut self, damages: Vec<Damage>)
     {
