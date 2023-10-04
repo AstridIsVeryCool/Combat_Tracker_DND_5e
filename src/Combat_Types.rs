@@ -80,6 +80,7 @@ impl Attack
 pub struct Entity
 {
     pub is_player: bool,
+    pub name: String,
     pub hitpoints: i32,
     pub maximum_hitpoints: i32,
     pub temporary_hitpoints: i32,

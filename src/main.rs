@@ -38,6 +38,10 @@ fn create_entity() //-> Entity
 
     println!("Is the entity a player?: y/n");
     io::stdin().read_line(&mut user_input);
+    let name = &user_input[0..user_input.len()];
+
+    println!("Is the entity a player?: y/n");
+    io::stdin().read_line(&mut user_input);
     let is_player: bool = (user_input == "y\r\n") || (user_input == "Y\r\n");
 
     println!("How many hit points does it currently have?: enter a positive integer");
@@ -67,11 +71,11 @@ fn create_entity() //-> Entity
 
 fn create_attack_vec() -> Vec<Attack>
 {
-    let user_input: String::new();
+    let mut user_input = String::new();
 
     let more_attacks: bool;
 
-    let attacks: Vec<combat_types::DamageCategory> vec![];
+    let attacks: Vec<combat_types::DamageCategory> = vec![];
     while more_attacks
     {
         println!("What is the name of this attack?:");
