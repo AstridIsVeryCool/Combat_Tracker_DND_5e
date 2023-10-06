@@ -18,12 +18,10 @@ fn main()
     while continue_running
     {
         io::stdin().read_line(&mut console_input);
-
         if console_input == "create entity"
         {
 
         }
-
     }
     */
     create_entity();
@@ -71,7 +69,7 @@ fn create_attack_vec() -> Vec<Attack>
 
     let more_attacks: bool;
 
-    let attacks: Vec<combat_types::DamageCategory> vec![];
+    let attacks: Vec<combat_types::DamageCategory>  = vec![];
     while more_attacks
     {
         println!("What is the name of this attack?:");
