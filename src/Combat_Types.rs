@@ -147,4 +147,5 @@ impl Entity
         }
         return attack.roll_damage(is_critical_hit);
     }
+
 }
