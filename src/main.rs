@@ -18,10 +18,12 @@ fn main()
     while continue_running
     {
         io::stdin().read_line(&mut console_input);
+
         if console_input == "create entity"
         {
 
         }
+
     }
     */
     create_entity();
@@ -33,6 +35,10 @@ fn main()
 fn create_entity() //-> Entity
 {
     let mut user_input = String::new();
+
+    println!("Is the entity a player?: y/n");
+    io::stdin().read_line(&mut user_input);
+    let name = &user_input[0..user_input.len()];
 
     println!("Is the entity a player?: y/n");
     io::stdin().read_line(&mut user_input);
@@ -65,11 +71,11 @@ fn create_entity() //-> Entity
 
 fn create_attack_vec() -> Vec<Attack>
 {
-    let user_input: String::new();
+    let mut user_input = String::new();
 
     let more_attacks: bool;
 
-    let attacks: Vec<combat_types::DamageCategory>  = vec![];
+    let attacks: Vec<combat_types::DamageCategory> = vec![];
     while more_attacks
     {
         println!("What is the name of this attack?:");
