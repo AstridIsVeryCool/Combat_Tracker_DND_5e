@@ -12,8 +12,8 @@ fn main()
 {
     //let mut buffer = String::new();
     //io::stdin().read_line(&mut buffer);
-    let mut console_input: String = String::new();
-    let mut continue_running: bool = true;
+    //let mut console_input: String = String::new();
+    //let mut continue_running: bool = true;
     /*
     while continue_running
     {
@@ -26,7 +26,9 @@ fn main()
 
     }
     */
-    create_entity();
+    //create_entity();
+
+
 }
 
 //Add error handling, this shit will hard panic the instant anything goes wrong
@@ -84,10 +86,12 @@ fn create_attack_vec() -> Vec<Attack>
         let mut attack_name = &user_input[0..user_input.len() - 5];
         dbg!(attack_name);
 
-        println!("What is the to hit bonus of this attack?");
+        println!("What is the Damage Type of this attack?");
         user_input = "".to_string();
         io::stdin().read_line(&mut user_input);
-        let mut to_hit_bonus: i32 = user_input[0..user_input.len()-2].parse().unwrap();
+        user_input = String::from(user_input[0..user_input.len()-2]);
+
+
 
         println!("Is there another attack?: y/n");
         user_input = "".to_string();

@@ -133,7 +133,6 @@ impl Entity
             &self.take_single_damage(x);
         }
     }
-    //ADD ERROR HANDLING
     pub fn attack(&self, attack_name: &String, is_critical_hit: bool) ->Vec<Damage>
     {
         let mut attack = &self.attacks[0];
