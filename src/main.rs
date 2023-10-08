@@ -91,7 +91,10 @@ fn create_attack_vec() -> Vec<Attack>
         io::stdin().read_line(&mut user_input);
         user_input = String::from(user_input[0..user_input.len()-2]);
 
-
+        println!("What is the to hit bonus of this attack?");
+        user_input = "".to_string();
+        io::stdin().read_line(&mut user_input);
+        let to_hit_bonus: i32 = user_input[0..user_input.len()-2].parse().unwrap();
 
         println!("Is there another attack?: y/n");
         user_input = "".to_string();
