@@ -20,9 +20,7 @@ pub enum DamageType
     Thunder
 }
 
-impl DamageType
-{
-    fn string_to_damage_type(input: &String) -> Result<DamageType,Err()>
+    pub fn string_to_damage_type(input: &String) -> Result<DamageType,Err()>
     {
         let input_lowercase = &input.to_lowercase();
         match input_lowercase
@@ -43,7 +41,6 @@ impl DamageType
             _ => Err("Invalid Damage Type")
         }
     }
-}
 
 //represents the amount of damage of a certain type that could potentially be dealt
 pub struct DamageCategory

@@ -2,7 +2,7 @@ use std::{io, string};
 use std::io::Read;
 use combat_types::{Damage, DamageCategory, Entity};
 use log::debug;
-use crate::combat_types::Attack;
+use crate::combat_types::{Attack, DamageType, string_to_damage_type};
 
 #[allow(unused)]
 
@@ -86,10 +86,7 @@ fn create_attack_vec() -> Vec<Attack>
         let mut attack_name = &user_input[0..user_input.len() - 5];
         dbg!(attack_name);
 
-        println!("What is the Damage Type of this attack?");
-        user_input = "".to_string();
-        io::stdin().read_line(&mut user_input);
-        user_input = String::from(user_input[0..user_input.len()-2]);
+        get_damage_type_from_command_line();
 
         println!("What is the to hit bonus of this attack?");
         user_input = "".to_string();
@@ -102,6 +99,25 @@ fn create_attack_vec() -> Vec<Attack>
         more_attacks = (user_input == "y\r\n") || (user_input == "Y\r\n");
     }
     return vec![];
+}
+
+fn get_damage_type_from_command_line() -> DamageType
+{
+    let mut user_input: String;
+    let mut is_valid: bool = false;
+    println!("What is the Damage Type of this attack?");
+    user_input = "".to_string();
+    let mut damage_type: DamageType = DamageType::Slashing;
+    while !is_valid
+    {
+        io::stdin().read_line(&mut user_input);
+        damage_type = match string_to_damage_type(&user_input)
+        {
+            Ok(type_of_damage) => {is_valid = true; type_of_damage},
+            Err(e) => "Invalid value, try again:"
+        };
+    }
+    return damage_type;
 }
 
 fn create_damage_category()
