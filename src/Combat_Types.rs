@@ -1,3 +1,4 @@
+use std::io::Error;
 use std::vec;
 use rand::Rng;
 #[allow(unused)]
@@ -20,25 +21,25 @@ pub enum DamageType
     Thunder
 }
 
-    pub fn string_to_damage_type(input: &String) -> Result<DamageType,Err()>
+    pub fn string_to_damage_type(input: &str) -> Result<DamageType,&str>
     {
         let input_lowercase = &input.to_lowercase();
-        match input_lowercase
+        match input_lowercase.as_ref()
         {
-            String::from("acid") => Ok(DamageType::Acid),
-            String::from("bludgeoning") => Ok(DamageType::Bludgeoning),
-            String::from("cold") => Ok(DamageType::Cold),
-            String::from("fire") => Ok(DamageType::Fire),
-            String::from("force") => Ok(DamageType::Force),
-            String::from("lightning") => Ok(DamageType::Lightning),
-            String::from("necrotic") => Ok(DamageType::Necrotic),
-            String::from("piercing") => Ok(DamageType::Piercing),
-            String::from("poison") => Ok(DamageType::Poison),
-            String::from("psychic") => Ok(DamageType::Psychic),
-            String::from("radiant") => Ok(DamageType::Radiant),
-            String::from("slashing") => Ok(DamageType::Slashing),
-            String::from("thunder") => Ok(DamageType::Thunder),
-            _ => Err("Invalid Damage Type")
+            "acid" => Ok(DamageType::Acid),
+            "bludgeoning" => Ok(DamageType::Bludgeoning),
+            "cold" => Ok(DamageType::Cold),
+            "fire" => Ok(DamageType::Fire),
+            "force" => Ok(DamageType::Force),
+            "lightning" => Ok(DamageType::Lightning),
+            "necrotic" => Ok(DamageType::Necrotic),
+            "piercing" => Ok(DamageType::Piercing),
+            "poison" => Ok(DamageType::Poison),
+            "psychic" => Ok(DamageType::Psychic),
+            "radiant" => Ok(DamageType::Radiant),
+            "slashing" => Ok(DamageType::Slashing),
+            "thunder" => Ok(DamageType::Thunder),
+            _ => Err("Invalid Input, please input a damage type:"),
         }
     }
 
@@ -121,7 +122,7 @@ impl Entity
         {
             is_resistant = is_resistant | (x == &damage_done.damage_type_for_damage);
         }
-        self.hitpoints -= damage_done.amount * 0.5.pow(is_resistant as i32);
+        self.hitpoints -= damage_done.amount * (0.5_f32.powf((is_resistant) as i32 as f32)) as i32;
     }
     pub fn take_damage(&mut self, damages: Vec<Damage>)
     {
