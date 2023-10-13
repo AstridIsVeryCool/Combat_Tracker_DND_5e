@@ -108,7 +108,8 @@ pub struct Entity
     pub temporary_hitpoints: i32,
     pub armour_class: i32,
     pub attacks: Vec<Attack>,
-    pub resistances: Vec<DamageType>
+    pub resistances: Vec<DamageType>,
+    pub intitiative: i32
 }
 
 impl Entity
@@ -144,5 +145,4 @@ impl Entity
         }
         return attack.roll_damage(is_critical_hit);
     }
-
 }

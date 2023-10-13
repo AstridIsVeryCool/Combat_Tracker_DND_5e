@@ -7,34 +7,53 @@ use crate::combat_types::{Attack, DamageType, string_to_damage_type};
 #[allow(unused)]
 
 mod combat_types;
+mod round_tracker;
 
 fn main() 
 {
-    //let mut buffer = String::new();
-    //io::stdin().read_line(&mut buffer);
-    //let mut console_input: String = String::new();
-    //let mut continue_running: bool = true;
-    /*
-    while continue_running
+    let mut running = true;
+    let mut entities: Vec<combat_types::Entity> = vec![];
+
+
+    while running
     {
-        io::stdin().read_line(&mut console_input);
-
-        if console_input == "create entity"
+        if !&entities.is_empty()
         {
-
+            for i in &mut entities
+            {
+                println!("{}:", i.name);
+                println!("   Current HP:{}", i.hitpoints);
+                println!("   Max hp:{}", i.maximum_hitpoints);
+                println!("   Armor Class:{}", i.armour_class);
+                println!();
+            }
         }
+        println!("What do?");
+        let mut invalid_choice = true;
 
+        while invalid_choice
+        {
+            invalid_choice = false;
+            match read_from_console().to_lowercase().as_ref()
+            {
+                "create entity" => entities.push(create_entity()),
+                "quit" => running = false,
+                _ => {
+                    println!("please enter a valid choice");
+                    invalid_choice = false;
+                },
+            }
+        }
     }
-    */
-    //create_entity();
-
-
 }
 
 
-fn create_entity() //-> Entity
+fn create_entity() -> Entity
 {
     let mut user_input = String::new();
+
+    println!("What is the entity's name?: ");
+    let name = read_from_console();
 
     println!("Is the entity a player?: y/n");
     user_input = read_from_console();
@@ -52,7 +71,14 @@ fn create_entity() //-> Entity
     println!("What is its armor class?: enter a positive integer");
     let ac: i32 = read_integer_from_console();
 
+    println!("Creating attacks...");
     let attacks = create_attack_vec();
+
+    println!("Loading resistances, enter them one at a time...");
+    let resistances = read_resistances_from_console();
+
+    return combat_types::Entity{name, is_player, hitpoints: current_hit_points, maximum_hitpoints: maximum_hit_points,
+    temporary_hitpoints: temporary_hit_points, armour_class: ac, attacks, resistances, intitiative: 0};
 }
 
 fn create_attack_vec() -> Vec<Attack>
@@ -68,14 +94,16 @@ fn create_attack_vec() -> Vec<Attack>
         let attack_name = read_from_console();
         //dbg!(attack_name);
 
-        let attack_damage_categories   = create_damage_categories();
-
         println!("What is the to hit bonus of this attack?");
         let hit_bonus: i32 = read_integer_from_console();
+
+        let attack_damage_categories   = create_damage_categories();
 
         println!("Is there another attack?: y/n");
         user_input = read_from_console();
         more_attacks = (user_input.to_uppercase() == "Y");
+
+
 
 
         attacks.push(Attack{name: attack_name,
@@ -94,7 +122,6 @@ fn read_damage_type_from_console() -> DamageType
     let mut damage_type: DamageType = DamageType::Slashing;
     while !is_valid
     {
-        println!("What is the Damage Type of this attack?");
         user_input = read_from_console();
         match string_to_damage_type(&user_input)
         {
@@ -125,20 +152,28 @@ fn create_damage_categories() -> Vec<DamageCategory>
         println!("What is the damage type in this category?:");
         let damage_type = read_damage_type_from_console();
 
+        println!("Is there another damage category in this attack? y/n:");
+        another_damage_category = read_from_console().to_uppercase() == "Y";
+
+        damage_categories.push(DamageCategory{bonus: damage_bonus, die: damage_die,
+            num_dice, category_type: damage_type})
+
     }
     damage_categories
+
 }
 
 fn read_integer_from_console() -> i32
 {
-    let input = read_from_console();
+
     let mut input_integer: i32;
     let mut valid_result = false;
     let mut validated_integer: i32 = 0;
 
     while !valid_result
     {
-        match input[0..input.len() - 2].parse()
+        let input = read_from_console();
+        match input.trim().parse::<i32>()
         {
             Ok(int) => {validated_integer = int; valid_result = true},
             Err(E) => println!("Please enter a valid integer: "),
@@ -156,7 +191,7 @@ fn read_from_console() -> String {
     {
         match io::stdin().read_line(&mut user_input)
         {
-            Ok(input) => { validated_input = String::from(&user_input[0..user_input.len()-2]) },
+            Ok(input) => { validated_input = String::from(&user_input[0..user_input.len()-2]); valid_result = true; },
             Err(n) => println!("Invalid input: please enter a valid value:")
         }
     }
@@ -165,17 +200,21 @@ fn read_from_console() -> String {
 
 fn read_resistances_from_console() -> Vec<combat_types::DamageType>
 {
-    let mut another_damage_type = true;
+    let mut another_damage_type:bool;
     let mut resistances:Vec<DamageType> = vec![];
+
+    println!("Are there resistances? y/n:");
+    let user_input = read_from_console();
+    another_damage_type = user_input.to_uppercase() == "Y";
 
     while another_damage_type
     {
+        println!("What is the damage type?: ");
         resistances.push(read_damage_type_from_console());
 
         println!("Is there another damage type? y/n:");
         let user_input = read_from_console();
         another_damage_type = user_input.to_uppercase() == "Y";
-
     }
     resistances
 }
